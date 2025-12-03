@@ -3,21 +3,53 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI-Edited Image Detector</title>
+    <title>FakeImage Detector – Detecting AI-Augmented Images</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { scroll-behavior: smooth; }
+        body {
+            scroll-behavior: smooth;
+        }
         .hero {
-            padding: 140px 0;
-            background: linear-gradient(135deg, #0c1445, #3b7dba);
+            padding: 140px 0 120px 0;
+            background: linear-gradient(135deg, #060b26, #243b73);
             color: white;
             text-align: center;
         }
         .section-title {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+            font-weight: 700;
+        }
+        .section-subtitle {
+            max-width: 760px;
+            margin: 0 auto 24px auto;
+        }
+        .pill {
+            border-radius: 999px;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .pill-light {
+            background: rgba(255,255,255,0.12);
+            color: #f8f9fa;
+        }
+        .feature-card {
+            border-radius: 18px;
+            padding: 18px 20px;
+            height: 100%;
+        }
+        .metric-card {
+            border-radius: 18px;
+            padding: 22px 20px;
+            height: 100%;
+        }
+        .metric-value {
+            font-size: 2.1rem;
             font-weight: 700;
         }
         .team-photo {
@@ -26,24 +58,36 @@
             object-fit: cover;
             border-radius: 50%;
         }
+        .bg-deep {
+            background-color: #050814;
+        }
+        .bg-alt {
+            background-color: #0f172a;
+        }
+        footer {
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
-<body>
+<body class="bg-deep text-white">
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">AI Image Detector</a>
+        <a class="navbar-brand fw-semibold" href="#hero">FakeImage Detector</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#mission">Mission</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#problem">Problem</a></li>
+                <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pipeline">Pipeline</a></li>
+                <li class="nav-item"><a class="nav-link" href="#results">Results</a></li>
+                <li class="nav-item"><a class="nav-link" href="#limitations">Limitations</a></li>
                 <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
             </ul>
         </div>
@@ -53,81 +97,420 @@
 <!-- HERO -->
 <section id="hero" class="hero">
     <div class="container">
-        <h1 class="display-4 fw-bold">AI-Edited Image Detector</h1>
-        <p class="lead mt-3">
-            A deep learning system that detects and segments AI-edited regions in images,
-            helping identify manipulation, inpainting, and synthetic alterations.
+        <div class="pill pill-light mb-3">DATA 210 · Final Project</div>
+        <h1 class="display-4 fw-bold">Detecting Masks on AI-Augmented Images</h1>
+        <p class="lead mt-3 section-subtitle">
+            FakeImage Detector is a computer vision system that locates AI-edited regions in images,
+            helping investigators understand <strong>where</strong> an image has been manipulated and
+            <strong>whether</strong> they can trust what they see.
         </p>
 
         <!-- VIDEO EMBED -->
         <div class="ratio ratio-16x9 mt-5">
-            <!-- Replace the URL below with your actual YouTube/Loom demo link -->
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" allowfullscreen></iframe>
+            <!-- TODO: Replace VIDEO_ID_HERE with your actual YouTube/Loom video id or full embed URL -->
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE"
+                    title="FakeImage Detector Demo" allowfullscreen></iframe>
         </div>
     </div>
 </section>
 
 <!-- MISSION -->
-<section id="mission" class="py-5">
+<section id="mission" class="py-5 bg-alt">
     <div class="container">
-        <h2 class="section-title text-center">Mission</h2>
-        <p class="text-center fs-5">
-            Our mission is to build a reliable and interpretable model that can identify images
-            manipulated using AI inpainting or generative editing techniques. As synthetic media
-            becomes more pervasive, tools like this help promote transparency, trust, and safety
-            across digital platforms.
-        </p>
+        <h2 class="section-title text-center">Mission & Goal</h2>
+
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Our Mission</h5>
+                    <p class="mb-0">
+                        Build a reliable, scalable system that leverages machine learning to accurately
+                        and efficiently detect AI-augmented sections of images — not just answering
+                        “real or fake?”, but visualizing <em>exactly where</em> manipulations occur.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Our Goal</h5>
+                    <p class="mb-0">
+                        Ensure users — starting with insurance investigators and eventually
+                        journalists and content moderators — have tools to quickly assess whether
+                        they can trust digital content and document visual evidence of manipulation.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="py-5 bg-light">
+<!-- PROBLEM -->
+<section id="problem" class="py-5">
     <div class="container">
-        <h2 class="section-title text-center">About the Project</h2>
-        <p class="fs-5">
-            This project focuses on detecting AI-generated edits in images by training a
-            segmentation model on multiple inpainting datasets including Beyond the Brush,
-            InpaintCOCO, and COCO-Inpaint. Edited regions tend to have subtle artifacts such
-            as texture inconsistencies, unnatural boundaries, or model hallucination patterns.
+        <h2 class="section-title text-center">The Problem: Undetectable Fakes</h2>
+        <p class="section-subtitle text-center">
+            Generative AI has made image manipulation <strong>instant</strong>, <strong>photorealistic</strong>,
+            and <strong>accessible</strong>. That opens the door to fraud, reputational harm, and misinformation
+            at scale.
         </p>
 
-        <p class="fs-5 mt-4">
-            We trained a <strong>U-Net architecture with a ResNet-18 encoder</strong> to segment
-            edited regions pixel-by-pixel. The model was optimized using IoU and F-score,
-            achieving strong performance across a wide range of mask sizes. Additional metrics
-            including per-mask-size IoU and precision/recall were used to evaluate robustness
-            against extremely small or large edited areas.
+        <div class="row g-4 mt-2">
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Instant</h6>
+                    <p class="mb-0">Free tools allow anyone to inpaint or edit images in seconds — no design or technical expertise required.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Photorealistic</h6>
+                    <p class="mb-0">Edits are nearly impossible to spot visually, even for trained humans.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Accessible</h6>
+                    <p class="mb-0">Open-source models and web UIs democratize powerful manipulation capabilities.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Dangerous</h6>
+                    <p class="mb-0">
+                        Used in fraud, insurance claims, journalism, politics, and legal evidence —
+                        where trust in images really matters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-7">
+                <div class="feature-card bg-dark h-100">
+                    <h6 class="fw-semibold mb-2">Real-world stakes</h6>
+                    <ul class="mb-0">
+                        <li>Organized disinformation campaigns mass-producing fake images.</li>
+                        <li>Reputational harm to individuals and brands.</li>
+                        <li>Shaping political narratives and public opinion.</li>
+                        <li>Supporting fabricated insurance and legal claims.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="feature-card bg-dark h-100">
+                    <h6 class="fw-semibold mb-2">Scale of the problem</h6>
+                    <p class="mb-1">
+                        Early estimates suggest a rapidly growing share of images on social media are
+                        AI-generated or heavily AI-edited, with AI-driven fake content increasing
+                        several-fold in just the last few years.
+                    </p>
+                    <p class="mb-0">
+                        Enterprises are already planning “content authenticity” functions to cope with this shift.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUTION / USERS -->
+<section id="solution" class="py-5 bg-alt">
+    <div class="container">
+        <h2 class="section-title text-center">Our Solution & Target Users</h2>
+        <p class="section-subtitle text-center">
+            Most tools simply answer “real or fake?” FakeImage Detector goes further with
+            <strong>binary detection</strong>, <strong>precise localization</strong>, and
+            <strong>visual explanations</strong> tailored to real workflows.
         </p>
 
-        <p class="fs-5 mt-4">
-            This work demonstrates how computer vision techniques can be applied to improve
-            digital media authenticity, support misinformation defense strategies, and help
-            users identify AI-modified content.
+        <div class="row g-4 mt-2">
+            <div class="col-md-4">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Binary Detection</h6>
+                    <p class="mb-0">
+                        Decide whether an image has been AI-manipulated at all — giving investigators
+                        an initial signal for fraud review.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Precise Localization</h6>
+                    <p class="mb-0">
+                        Pixel-level masks highlight <em>where</em> content was inserted, removed,
+                        or altered, providing visual proof.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">Explainability</h6>
+                    <p class="mb-0">
+                        Overlays and side-by-side comparisons make it easy to include evidence
+                        in reports, claims notes, or investigative write-ups.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Primary Users: Insurance Investigators</h5>
+                    <ul class="mb-0">
+                        <li>High-stakes decisions: fraudulent photo evidence can drive large payouts.</li>
+                        <li>Need proof of manipulation, not just a score.</li>
+                        <li>Clear workflow: upload → detect → export visual report.</li>
+                        <li>Immediate ROI by preventing false payouts.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">User Requirements</h5>
+                    <ul class="mb-0">
+                        <li><strong>Speed:</strong> process claims within minutes.</li>
+                        <li><strong>Accuracy:</strong> ~95% confidence in manipulated regions.</li>
+                        <li><strong>Explainability:</strong> mask overlays for human review.</li>
+                        <li><strong>Scalability:</strong> hundreds of images per day.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center">How It Works: ML Pipeline</h2>
+        <p class="section-subtitle text-center">
+            FakeImage Detector is built as a segmentation pipeline that learns to highlight
+            manipulated regions directly from ground-truth masks.
         </p>
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">1. Datasets</h6>
+                    <p class="mb-0">
+                        We combine Beyond the Brush and COCO-Inpaint image–mask pairs and exclude very
+                        tiny masks (&lt;10% coverage) to focus on meaningful manipulations.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">2. Pre-processing</h6>
+                    <p class="mb-0">
+                        Images are resized, normalized, and augmented with rotation, blur, and compression
+                        to mimic noisy real-world photos.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">3. Model Training</h6>
+                    <p class="mb-0">
+                        We experiment with U-Net (ResNet-18 encoder) and a Vision Transformer (ViT) for
+                        pixel-wise segmentation, tuning loss, dropout, and masking thresholds.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card bg-dark">
+                    <h6 class="fw-semibold">4. Evaluation & Deployment</h6>
+                    <p class="mb-0">
+                        Models are evaluated with IoU and F-Score across mask sizes. The best ViT model
+                        is packaged for serving in an interactive demo.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Datasets</h5>
+                    <ul class="mb-1">
+                        <li><strong>Beyond the Brush</strong>: 4,930 image–mask pairs.</li>
+                        <li>After removing small masks: 2,459 medium + 2,471 large masks.</li>
+                        <li>60/20/20 train–validation–test split, mean mask coverage ~22% of pixels.</li>
+                        <li><strong>COCO-Inpaint</strong>: 1,260 additional images with varying mask sizes.</li>
+                    </ul>
+                    <p class="mb-0">
+                        Key insight: excluding very small masks improved performance and better aligns
+                        with the kinds of manipulations that affect meaning.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Model Architecture</h5>
+                    <p class="mb-1">
+                        We initially trained a U-Net with a ResNet-18 encoder for sharp boundaries,
+                        but performance plateaued at an IoU of ~0.82.
+                    </p>
+                    <p class="mb-1">
+                        Switching to a <strong>Vision Transformer (ViT)</strong> allowed the model to capture
+                        global context and subtle inconsistencies, improving F-Score by ~9 percentage points
+                        at the cost of more computation.
+                    </p>
+                    <p class="mb-0">
+                        Final model: ViT trained for 200 epochs with 15% dropout and a 36% mask threshold
+                        tuned to avoid missing small manipulated regions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="py-5 bg-alt">
+    <div class="container">
+        <h2 class="section-title text-center">Model Performance</h2>
+        <p class="section-subtitle text-center">
+            Our final ViT-based model delivers strong overlap with ground-truth masks and a balanced
+            precision/recall profile suitable for high-stakes review.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="metric-card bg-dark text-center">
+                    <p class="text-uppercase small mb-1">F-Score</p>
+                    <div class="metric-value">0.95</div>
+                    <p class="mb-0">Strong balance of precision and recall on the test set.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card bg-dark text-center">
+                    <p class="text-uppercase small mb-1">Precision</p>
+                    <div class="metric-value">~0.95</div>
+                    <p class="mb-0">Low false alarms — we rarely flag pixels as fake when they aren’t.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card bg-dark text-center">
+                    <p class="text-uppercase small mb-1">IoU</p>
+                    <div class="metric-value">0.91</div>
+                    <p class="mb-0">On average, the predicted mask overlaps &gt;90% with ground truth.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Training Dynamics</h5>
+                    <ul class="mb-0">
+                        <li>Validation loss decreases steadily over 200 epochs.</li>
+                        <li>Gap between training and validation remains reasonable.</li>
+                        <li>No evidence of severe overfitting — model learns generalizable patterns.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">IoU Distribution</h5>
+                    <p class="mb-1">
+                        Most test images achieve IoU &gt; 0.9, meaning our predicted masks are
+                        essentially indistinguishable from ground-truth masks for the majority of cases.
+                    </p>
+                    <p class="mb-0">
+                        This gives investigators high-resolution evidence of where images were altered.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-12">
+                <div class="feature-card bg-dark">
+                    <h5 class="fw-semibold mb-2">Qualitative Examples</h5>
+                    <p class="mb-0">
+                        In many examples, such as AI-inserted fountains or people, the model draws
+                        masks that closely track the manipulated objects while ignoring untouched
+                        background, producing intuitive overlays for human reviewers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section id="limitations" class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center">Limitations & Future Work</h2>
+        <p class="section-subtitle text-center">
+            While the model performs exceptionally well on curated datasets, real-world images are messy.
+            Our testing on internet photos highlights both promise and remaining gaps.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Current Limitations</h5>
+                    <ul class="mb-0">
+                        <li>Generalization drops on fully out-of-distribution internet images.</li>
+                        <li>Training data is still dominated by specific inpainting styles.</li>
+                        <li>Extremely small or subtle manipulations remain challenging.</li>
+                        <li>Model can misinterpret heavy color edits as structural changes.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-card bg-dark h-100">
+                    <h5 class="fw-semibold mb-2">Future Directions</h5>
+                    <ul class="mb-0">
+                        <li>Expand to diverse, real-world edited images from the open web.</li>
+                        <li>Jointly train on both segmentation and global “real vs fake” labels.</li>
+                        <li>Incorporate uncertainty estimates for high-risk decisions.</li>
+                        <li>Integrate into a full investigator workflow: upload, detect, annotate, export report.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- TEAM -->
-<section id="team" class="py-5">
+<section id="team" class="py-5 bg-alt">
     <div class="container text-center">
-        <h2 class="section-title">Our Team</h2>
+        <h2 class="section-title">Team</h2>
+        <p class="section-subtitle">
+            FakeImage Detector was built as a collaboration between three members of the
+            UC Berkeley MIDS program.
+        </p>
 
-        <div class="row justify-content-center">
-
-            <!-- MEMBER 1 -->
-            <div class="col-md-3 mb-4">
-                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="">
-                <h5 class="fw-bold">H J</h5>
-                <p class="text-muted">Model Architecture & Training</p>
+        <div class="row justify-content-center g-4 mt-2">
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="Hima Kethu">
+                <h5 class="fw-semibold mb-1">Hima Kethu</h5>
+                <p class="text-muted mb-0">Modeling & Evaluation</p>
             </div>
-
-            <!-- MEMBER 2 -->
-            <div class="col-md-3 mb-4">
-                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="">
-                <h5 class="fw-bold">Teammate 2</h5>
-                <p class="text-muted">Data Processing & Evaluation</p>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="Himaja Jangle">
+                <h5 class="fw-semibold mb-1">Himaja Jangle</h5>
+                <p class="text-muted mb-0">Product Framing & UX</p>
             </div>
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="Maya Leviten">
+                <h5 class="fw-semibold mb-1">Maya Leviten</h5>
+                <p class="text-muted mb-0">Data Pipeline & Analysis</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <!-- MEMBER 3 -->
-            <div class="col-md-3 mb-4">
-                <img src="https://via.placeho
+<!-- FOOTER -->
+<footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">© 2025 FakeImage Detector · DATA 210 Final Project</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

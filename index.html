@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FakeImage Detector - See Where AI Has Rewritten Your Images</title>
+    <title>FakeImage Detector - Trust What You See</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,16 +12,21 @@
         body { 
             scroll-behavior: smooth;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #020617;
         }
         
+        /* HERO (dark blue gradient) */
         .hero-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(circle at top left, #22d3ee33, transparent 55%),
+                        radial-gradient(circle at bottom right, #6366f133, transparent 55%),
+                        linear-gradient(135deg, #020617 0%, #020617 100%);
             color: white;
             position: relative;
             overflow: hidden;
+            padding: 140px 0 110px 0;
         }
         
         .hero-section::before {
@@ -31,48 +36,113 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
-            opacity: 0.4;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.04"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
+            opacity: 0.35;
         }
         
-        .hero-content {
+        .hero-inner {
             position: relative;
             z-index: 1;
-            text-align: center;
-            padding: 80px 0;
+        }
+
+        .hero-eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 0.9rem;
         }
         
         .hero-title {
-            font-size: 3.5rem;
+            font-size: clamp(2.8rem, 4.4vw, 3.7rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            line-height: 1.2;
+            line-height: 1.15;
+        }
+        
+        .hero-title span {
+            color: #38bdf8;
         }
         
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 300;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.4rem;
             opacity: 0.95;
+            max-width: 520px;
         }
         
         .cta-button {
+            display: inline-block;
             padding: 16px 48px;
             font-size: 1.2rem;
             font-weight: 600;
-            border-radius: 50px;
-            background: white;
-            color: #667eea;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #ffffff;
             border: none;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.55);
+            transition: all 0.25s ease;
+            text-decoration: none;
         }
         
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(16, 185, 129, 0.8);
+            color: #ffffff;
         }
-        
+
+        /* Hero image */
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        .hero-main-img {
+            width: 100%;
+            max-width: 520px;
+            height: 260px;
+            border-radius: 22px;
+            object-fit: cover;
+            border: 1px solid rgba(148,163,184,0.6);
+            box-shadow: 0 18px 45px rgba(15,23,42,0.85);
+        }
+
+        .hero-mask-img {
+            position: absolute;
+            right: 5%;
+            bottom: -14%;
+            width: 55%;
+            height: 170px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 1px solid rgba(56,189,248,0.7);
+            box-shadow: 0 14px 35px rgba(15,23,42,0.9);
+        }
+
+        @media (max-width: 992px) {
+            .hero-section {
+                padding-top: 120px;
+                text-align: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image-wrapper {
+                margin-top: 40px;
+            }
+            .hero-main-img {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-mask-img {
+                position: static;
+                width: 80%;
+                margin: 18px auto 0 auto;
+                display: block;
+            }
+        }
+
         .section-padding {
             padding: 100px 0;
         }
@@ -225,32 +295,33 @@
         }
         
         footer {
-            background: #2d3748;
+            background: #020617;
             color: white;
             padding: 40px 0;
             text-align: center;
         }
         
+        /* DARK NAVBAR */
         .navbar-custom {
-            background: rgba(255,255,255,0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(2,6,23,0.96) !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.8);
         }
         
         .navbar-custom .navbar-brand {
             font-weight: 700;
-            color: #667eea !important;
+            color: #f9fafb !important;
             font-size: 1.3rem;
         }
         
         .navbar-custom .nav-link {
-            color: #2d3748 !important;
+            color: #e5e7eb !important;
             font-weight: 500;
             margin: 0 10px;
         }
         
         .navbar-custom .nav-link:hover {
-            color: #667eea !important;
+            color: #38bdf8 !important;
         }
     </style>
 </head>
@@ -258,9 +329,9 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
     <div class="container">
-        <a class="navbar-brand" href="#">FakeImage Detector</a>
+        <a class="navbar-brand" href="#hero">FakeImage Detector</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -280,14 +351,32 @@
 
 <!-- HERO SECTION -->
 <section id="hero" class="hero-section">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">See where AI has rewritten your images.</h1>
-            <p class="hero-subtitle">
-                FakeImage Detector highlights AI-edited regions in photos so investigators, journalists, 
-                and trust & safety teams can instantly spot manipulated evidence.
-            </p>
-            <button class="cta-button">Get Started</button>
+    <div class="container hero-inner">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6">
+                <div class="hero-eyebrow">AI-EDITED IMAGE DETECTION</div>
+                <h1 class="hero-title">
+                    Trust what you see<br>
+                    <span>in every image.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload a photo and instantly see where AI has altered it.
+                </p>
+                <a href="#demo" class="cta-button">Try the demo</a>
+            </div>
+
+            <div class="col-lg-6 hero-image-wrapper">
+                <img
+                    class="hero-main-img"
+                    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+                    alt="Example original image"
+                />
+                <img
+                    class="hero-mask-img"
+                    src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=900&q=80"
+                    alt="Example detection overlay"
+                />
+            </div>
         </div>
     </div>
 </section>

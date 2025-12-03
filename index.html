@@ -377,6 +377,63 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
+        /* ---- Mission Section ---- */
+
+        .mission-section {
+            background: radial-gradient(circle at top left, #111827, #020617);
+        }
+        
+        #mission .section-title {
+            color: #e5e7eb;
+        }
+        
+        #mission .section-subtitle {
+            color: #9ca3af;
+        }
+        
+        .mission-row {
+            align-items: stretch;
+        }
+        
+        .mission-card {
+            height: 100%;
+            border-radius: 32px;
+            padding: 40px 36px;
+            border: 1px solid rgba(148,163,184,0.5);
+            box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .mission-card--blue {
+            background: radial-gradient(circle at top left, #1e293b, #020617);
+            border-color: rgba(59,130,246,0.7);
+        }
+        
+        .mission-card--green {
+            background: radial-gradient(circle at top left, #064e3b, #020617);
+            border-color: rgba(16,185,129,0.7);
+        }
+        
+        .mission-card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.4rem;
+            color: #bfdbfe; /* light blue/green depending on bg */
+        }
+        
+        .mission-card--green .mission-card-title {
+            color: #6ee7b7;
+        }
+        
+        .mission-card-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e5e7eb;
+        }
+
         
         </style>
 
@@ -481,6 +538,41 @@
         </div>
     </div>
 </section>
+<!-- MISSION SECTION -->
+<section id="mission" class="section-padding mission-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Why We Built FakeImage Detector</h2>
+      <p class="section-subtitle">
+        A clear mission and goal: make AI-edited images obvious, not invisible.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center mission-row">
+      <div class="col-lg-5">
+        <div class="mission-card mission-card--blue">
+          <h3 class="mission-card-title">Our Mission</h3>
+          <p class="mission-card-text">
+            Build a reliable, scalable system that leverages machine learning to
+            quickly and accurately detect AI-augmented sections of images.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="mission-card mission-card--green">
+          <h3 class="mission-card-title">Our Goal</h3>
+          <p class="mission-card-text">
+            Give reviewers and decision-makers the tools they need to know
+            whether they can trust digital content before they act on it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    
 
 <!-- HOW IT WORKS -->
 <section id="how" class="section-padding">

@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Your Project Name</title>
+    <title>AI-Edited Image Detector</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            scroll-behavior: smooth;
-        }
+        body { scroll-behavior: smooth; }
         .hero {
-            padding: 120px 0;
-            background: linear-gradient(135deg, #1b1f3b, #4b6cb7);
+            padding: 140px 0;
+            background: linear-gradient(135deg, #0c1445, #3b7dba);
             color: white;
             text-align: center;
         }
@@ -36,7 +34,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Your Project</a>
+        <a class="navbar-brand" href="#">AI Image Detector</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,11 +53,15 @@
 <!-- HERO -->
 <section id="hero" class="hero">
     <div class="container">
-        <h1 class="display-4 fw-bold">Your Project Name</h1>
-        <p class="lead mt-3">A short 1–2 sentence description of your modeling project.</p>
+        <h1 class="display-4 fw-bold">AI-Edited Image Detector</h1>
+        <p class="lead mt-3">
+            A deep learning system that detects and segments AI-edited regions in images,
+            helping identify manipulation, inpainting, and synthetic alterations.
+        </p>
 
-        <!-- Video Embed (Replace the link with your YouTube/Loom/Vimeo link) -->
+        <!-- VIDEO EMBED -->
         <div class="ratio ratio-16x9 mt-5">
+            <!-- Replace the URL below with your actual YouTube/Loom demo link -->
             <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" allowfullscreen></iframe>
         </div>
     </div>
@@ -70,8 +72,10 @@
     <div class="container">
         <h2 class="section-title text-center">Mission</h2>
         <p class="text-center fs-5">
-            Write your mission statement here — what problem you solved, why it matters,
-            and what the model achieves.
+            Our mission is to build a reliable and interpretable model that can identify images
+            manipulated using AI inpainting or generative editing techniques. As synthetic media
+            becomes more pervasive, tools like this help promote transparency, trust, and safety
+            across digital platforms.
         </p>
     </div>
 </section>
@@ -80,10 +84,25 @@
 <section id="about" class="py-5 bg-light">
     <div class="container">
         <h2 class="section-title text-center">About the Project</h2>
-        <p class="fs-5 text-center">
-            Add 1–2 paragraphs describing your modeling approach:
-            the dataset, key features, model type (e.g., regression, classification, RNN, transformer, etc),
-            evaluation metrics, and what makes your approach unique.
+        <p class="fs-5">
+            This project focuses on detecting AI-generated edits in images by training a
+            segmentation model on multiple inpainting datasets including Beyond the Brush,
+            InpaintCOCO, and COCO-Inpaint. Edited regions tend to have subtle artifacts such
+            as texture inconsistencies, unnatural boundaries, or model hallucination patterns.
+        </p>
+
+        <p class="fs-5 mt-4">
+            We trained a <strong>U-Net architecture with a ResNet-18 encoder</strong> to segment
+            edited regions pixel-by-pixel. The model was optimized using IoU and F-score,
+            achieving strong performance across a wide range of mask sizes. Additional metrics
+            including per-mask-size IoU and precision/recall were used to evaluate robustness
+            against extremely small or large edited areas.
+        </p>
+
+        <p class="fs-5 mt-4">
+            This work demonstrates how computer vision techniques can be applied to improve
+            digital media authenticity, support misinformation defense strategies, and help
+            users identify AI-modified content.
         </p>
     </div>
 </section>
@@ -94,37 +113,21 @@
         <h2 class="section-title">Our Team</h2>
 
         <div class="row justify-content-center">
-            <!-- Member 1 -->
+
+            <!-- MEMBER 1 -->
             <div class="col-md-3 mb-4">
                 <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="">
-                <h5 class="fw-bold">Name 1</h5>
-                <p class="text-muted">Role (e.g., Modeling Lead)</p>
+                <h5 class="fw-bold">H J</h5>
+                <p class="text-muted">Model Architecture & Training</p>
             </div>
 
-            <!-- Member 2 -->
+            <!-- MEMBER 2 -->
             <div class="col-md-3 mb-4">
                 <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="">
-                <h5 class="fw-bold">Name 2</h5>
-                <p class="text-muted">Role</p>
+                <h5 class="fw-bold">Teammate 2</h5>
+                <p class="text-muted">Data Processing & Evaluation</p>
             </div>
 
-            <!-- Member 3 -->
+            <!-- MEMBER 3 -->
             <div class="col-md-3 mb-4">
-                <img src="https://via.placeholder.com/150" class="team-photo mb-3" alt="">
-                <h5 class="fw-bold">Name 3</h5>
-                <p class="text-muted">Role</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-dark text-white text-center py-3">
-    <p class="mb-0">© 2025 Your Team Name – All Rights Reserved</p>
-</footer>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+                <img src="https://via.placeho

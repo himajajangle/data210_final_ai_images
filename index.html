@@ -433,6 +433,51 @@
             line-height: 1.7;
             color: #e5e7eb;
         }
+        /* ---- Model Performance / Results Section ---- */
+        
+        .results-section {
+            background: #020617;  /* dark navy like other sections */
+        }
+        
+        #results .section-title {
+            color: #e5e7eb;
+        }
+        
+        #results .section-subtitle {
+            color: #9ca3af;
+        }
+        
+        .results-card {
+            background: #020617;
+            border-radius: 24px;
+            padding: 24px 24px 26px 24px;
+            border: 1px solid rgba(148,163,184,0.6);
+            box-shadow: 0 14px 36px rgba(15,23,42,0.9);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .results-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e5e7eb;
+            margin-bottom: 0.75rem;
+        }
+        
+        .results-card-text {
+            font-size: 0.98rem;
+            color: #cbd5f5;
+            margin-bottom: 1.2rem;
+        }
+        
+        .results-img {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(30,64,175,0.8);
+            background-color: #000;
+            object-fit: contain;
+        }
 
         
         </style>
@@ -678,6 +723,77 @@
         </div>
     </div>
 </section>
+
+<!-- MODEL PERFORMANCE SECTION -->
+<section id="results" class="section-padding results-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Model Performance</h2>
+      <p class="section-subtitle">
+        Our ViT-based detector consistently identifies AI-edited regions while staying robust across
+        diverse scenes and edit types.
+      </p>
+    </div>
+
+    <!-- Qualitative example -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-10">
+        <div class="results-card">
+          <h3 class="results-card-title">Pixel-Level Detection Example</h3>
+          <p class="results-card-text">
+            The model highlights edited regions (center) compared to the ground-truth mask (right),
+            enabling reviewers to see <em>where</em> the image was altered, not just whether it was.
+          </p>
+          <img src="images/overlay_example.png" alt="Overlay, predicted mask, ground truth mask"
+               class="results-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- Quantitative metrics -->
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="results-card">
+          <h4 class="results-card-title">Training &amp; Validation Loss</h4>
+          <p class="results-card-text">
+            Loss steadily decreases over 200 epochs, with validation loss closely tracking training loss,
+            indicating good generalization and no severe overfitting.
+          </p>
+          <img src="images/train_val_loss_vit.png"
+               alt="Train vs validation loss over epochs"
+               class="results-img">
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="results-card">
+          <h4 class="results-card-title">Validation IoU</h4>
+          <p class="results-card-text">
+            Intersection-over-Union improves rapidly and plateaus around the high 0.80s–0.90s,
+            reflecting accurate overlap between predicted and ground-truth masks.
+          </p>
+          <img src="images/val_iou_vit.png"
+               alt="Validation IoU over epochs"
+               class="results-img">
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="results-card">
+          <h4 class="results-card-title">Precision, Recall &amp; F-Score</h4>
+          <p class="results-card-text">
+            Precision, recall, and F-score all converge above ~0.9, balancing false positives
+            and false negatives for reliable downstream decisions.
+          </p>
+          <img src="images/precision_recall_fscore_vit.png"
+               alt="Precision, Recall, F-score over epochs"
+               class="results-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- DEMO SECTION -->
 <section id="demo" class="section-padding">

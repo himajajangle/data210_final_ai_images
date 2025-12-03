@@ -3,119 +3,254 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FakeImage Detector – Spot AI-Edited Images</title>
+    <title>FakeImage Detector - See Where AI Has Rewritten Your Images</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
+        body { 
             scroll-behavior: smooth;
-            background-color: #020617;
-            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        .navbar {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        .hero {
-            min-height: 100vh; /* full screen */
-            padding: 160px 0 120px 0;
-            background: radial-gradient(circle at top left, #22d3ee33, transparent 55%),
-                        radial-gradient(circle at bottom right, #6366f133, transparent 55%),
-                        linear-gradient(135deg, #020617, #020617);
-            color: #f9fafb;
-        }
-        .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-        }
-        .hero-title {
-            font-size: clamp(2.6rem, 4vw, 3.3rem);
-            font-weight: 800;
-        }
-        .hero-subtitle {
-            max-width: 540px;
-            color: #cbd5f5;
-        }
-        .hero-pill-row {
-            margin-top: 32px;
+        
+        .hero-section {
+            min-height: 100vh;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: #9ca3af;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
-        .hero-pill {
-            padding: 6px 12px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.4);
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
+            opacity: 0.4;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            background: white;
+            color: #667eea;
             border: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
-        .btn-outline-light {
-            border-color: #9ca3af;
-            color: #e5e7eb;
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3);
         }
+        
+        .section-padding {
+            padding: 100px 0;
+        }
+        
         .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        .problem-section {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+        
+        .workflow-step {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .workflow-title {
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 10px;
+            color: #2d3748;
         }
-        .section-subtitle {
-            max-width: 640px;
-            margin: 0 auto 32px auto;
-            color: #9ca3af;
+        
+        .workflow-description {
+            font-size: 1.1rem;
+            color: #4a5568;
+            line-height: 1.7;
         }
-        .feature-card, .metric-card, .arch-card {
-            border-radius: 18px;
-            border: 1px solid rgba(148, 163, 184, 0.35);
-            background: radial-gradient(circle at top left, #1d243880, #020617);
+        
+        .architecture-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
         }
-        .how-step {
-            position: relative;
-            padding-left: 32px;
+        
+        .architecture-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2d3748;
         }
-        .how-step::before {
-            content: "";
-            position: absolute;
-            left: 10px;
-            top: 6px;
-            width: 12px;
-            height: 12px;
-            border-radius: 999px;
-            background: #22c55e;
+        
+        .architecture-description {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.7;
         }
-        .gallery-img {
-            border-radius: 20px;
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border: 1px solid rgba(148, 163, 184, 0.45);
+        
+        .team-member {
+            text-align: center;
+            margin-bottom: 40px;
         }
+        
         .team-photo {
-            width: 110px;
-            height: 110px;
-            object-fit: cover;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 2px solid rgba(148, 163, 184, 0.7);
+            margin-bottom: 20px;
+            border: 4px solid #667eea;
         }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+        
+        .team-role {
+            font-size: 1rem;
+            color: #718096;
+        }
+        
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
         footer {
-            font-size: 0.85rem;
-            color: #9ca3af;
+            background: #2d3748;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
         }
-        .bg-alt {
-            background: radial-gradient(circle at top right, #1f293780, #020617);
+        
+        .navbar-custom {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            color: #667eea !important;
+            font-size: 1.3rem;
+        }
+        
+        .navbar-custom .nav-link {
+            color: #2d3748 !important;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            color: #667eea !important;
         }
     </style>
 </head>
@@ -123,19 +258,19 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom">
     <div class="container">
-        <a class="navbar-brand fw-semibold" href="#hero">FakeImage Detector</a>
+        <a class="navbar-brand" href="#">FakeImage Detector</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#why">Why</a></li>
-                <li class="nav-item"><a class="nav-link" href="#features">What it does</a></li>
-                <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
-                <li class="nav-item"><a class="nav-link" href="#architecture">Technical Architecture</a></li>
+                <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#problem">Why It Matters</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
                 <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
             </ul>
@@ -143,127 +278,57 @@
     </div>
 </nav>
 
-<!-- HERO -->
-<section id="hero" class="hero">
+<!-- HERO SECTION -->
+<section id="hero" class="hero-section">
     <div class="container">
-        <div class="row align-items-center gy-5">
-            <div class="col-lg-6">
-                <div class="hero-tag mb-3">
-                    <span>AI-Edited Image Detection</span>
-                    <span style="width:6px;height:6px;border-radius:999px;background:#22c55e;"></span>
-                    <span>For Risk &amp; Trust Teams</span>
-                </div>
-
-                <h1 class="hero-title mt-2">
-                    See where AI has <span style="color:#38bdf8;">rewritten</span> your images.
-                </h1>
-
-                <p class="hero-subtitle mt-3">
-                    FakeImage Detector highlights AI-edited regions in photos so investigators,
-                    journalists, and trust &amp; safety teams can instantly spot manipulated evidence.
-                </p>
-
-                <div class="d-flex flex-wrap gap-3 mt-4">
-                    <a href="#demo" class="btn btn-primary px-4 py-2">
-                        Watch 2-minute demo
-                    </a>
-                    <a href="#features" class="btn btn-outline-light px-4 py-2">
-                        Explore product
-                    </a>
-                </div>
-
-                <!-- Extra content to extend hero height -->
-                <div class="hero-pill-row">
-                    <div class="hero-pill">Designed for fraud &amp; claims teams</div>
-                    <div class="hero-pill">Works with your existing workflows</div>
-                    <div class="hero-pill">Human-review ready overlays</div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <!-- Hero visual: composite image preview + mask -->
-                <div class="row g-3">
-                    <div class="col-7">
-                        <img class="gallery-img"
-                             src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
-                             alt="Original image placeholder">
-                    </div>
-                    <div class="col-5">
-                        <img class="gallery-img"
-                             src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=900&q=80"
-                             alt="AI edited region mask placeholder">
-                    </div>
-                    <div class="col-12">
-                        <div class="feature-card p-3 d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="small text-uppercase text-muted mb-1">Pixel-level mask</div>
-                                <div class="fw-semibold">Explains not just <em>if</em> it’s fake, but <em>where</em>.</div>
-                            </div>
-                            <span class="badge bg-success bg-opacity-75">Optimized for review</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secondary mini-row to stretch hero -->
-                <div class="row g-3 mt-3">
-                    <div class="col-6">
-                        <div class="feature-card p-3 h-100">
-                            <div class="small text-uppercase text-muted mb-1">Use case</div>
-                            <div class="fw-semibold mb-1">Insurance claims</div>
-                            <p class="mb-0" style="font-size:0.85rem;">
-                                Flag suspicious photos before payouts are approved.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="feature-card p-3 h-100">
-                            <div class="small text-uppercase text-muted mb-1">Use case</div>
-                            <div class="fw-semibold mb-1">Content moderation</div>
-                            <p class="mb-0" style="font-size:0.85rem;">
-                                Give trust &amp; safety reviewers visual evidence at a glance.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="hero-content">
+            <h1 class="hero-title">See where AI has rewritten your images.</h1>
+            <p class="hero-subtitle">
+                FakeImage Detector highlights AI-edited regions in photos so investigators, journalists, 
+                and trust & safety teams can instantly spot manipulated evidence.
+            </p>
+            <button class="cta-button">Get Started</button>
         </div>
     </div>
 </section>
 
-<!-- WHY IT MATTERS -->
-<section id="why" class="py-5 bg-alt">
+<!-- PROBLEM SECTION -->
+<section id="problem" class="section-padding problem-section">
     <div class="container">
-        <h2 class="section-title text-center">Why teams need this now</h2>
-        <p class="section-subtitle text-center">
-            Generative AI has made credible fakes cheap and instant. Traditional fraud tools weren’t built
-            to understand pixels – FakeImage Detector is.
-        </p>
-
-        <div class="row g-4 mt-3">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Why FakeImage Detector Exists</h2>
+            <p class="section-subtitle">Generative AI has made credible fakes cheap and instant. Traditional fraud tools weren't built to understand pixels.</p>
+        </div>
+        
+        <div class="row g-4">
             <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">High-stakes decisions</h6>
-                    <p class="mb-0">
-                        Claims, credit, and compliance teams are increasingly asked to rely on user-submitted photos.
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3 class="feature-title">Real Stakes, Real Losses</h3>
+                    <p class="feature-description">
+                        Claims, credit, and compliance teams are increasingly asked to rely on user-submitted photos. 
                         When those photos are wrong, the losses are real.
                     </p>
                 </div>
             </div>
+            
             <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">Difficult to detect by eye</h6>
-                    <p class="mb-0">
-                        Modern AI inpainting tools produce edits that are nearly impossible to spot,
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3 class="feature-title">Invisible Manipulation</h3>
+                    <p class="feature-description">
+                        Modern AI inpainting tools produce edits that are nearly impossible to spot, 
                         even for trained reviewers on large screens.
                     </p>
                 </div>
             </div>
+            
             <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">Need for explainability</h6>
-                    <p class="mb-0">
-                        A single “real/fake” score doesn’t make a case. Pixel-level overlays give reviewers
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Beyond Binary Scores</h3>
+                    <p class="feature-description">
+                        A single "real/fake" score doesn't make a case. Pixel-level overlays give reviewers 
                         something they can screenshot, annotate, and share.
                     </p>
                 </div>
@@ -272,38 +337,39 @@
     </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features" class="py-5">
+<!-- HOW IT WORKS -->
+<section id="how" class="section-padding">
     <div class="container">
-        <h2 class="section-title text-center">What FakeImage Detector does</h2>
-        <p class="section-subtitle text-center">
-            A focused workflow that fits into existing review processes instead of replacing them.
-        </p>
-
-        <div class="row g-4 mt-3">
-            <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">Upload &amp; inspect</h6>
-                    <p class="mb-0">
-                        Drag-and-drop an image or paste a URL. The system runs detection in the background
+        <div class="text-center mb-5">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">A focused workflow that fits into existing review processes instead of replacing them.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h3 class="workflow-title">Upload Your Image</h3>
+                    <p class="workflow-description">
+                        Drag-and-drop an image or paste a URL. The system runs detection in the background 
                         and returns an interactive overlay in seconds.
                     </p>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">Highlight suspicious regions</h6>
-                    <p class="mb-0">
-                        See which parts of the photo were likely added, removed, or heavily altered.
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h3 class="workflow-title">Review the Detection</h3>
+                    <p class="workflow-description">
+                        See which parts of the photo were likely added, removed, or heavily altered. 
                         Toggle mask opacity to compare against the original.
                     </p>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">Shareable evidence</h6>
-                    <p class="mb-0">
-                        Export side-by-side “before &amp; mask” views for claim notes, investigations,
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h3 class="workflow-title">Export & Document</h3>
+                    <p class="workflow-description">
+                        Export side-by-side "before & mask" views for claim notes, investigations, 
                         or internal documentation – no extra tooling required.
                     </p>
                 </div>
@@ -312,148 +378,137 @@
     </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how" class="py-5 bg-alt">
-    <div class="container">
-        <h2 class="section-title text-center">How it works</h2>
-        <p class="section-subtitle text-center">
-            Behind the scenes, FakeImage Detector uses a segmentation model tuned specifically
-            for AI-generated edits, wrapped in a simple web experience.
-        </p>
-
-        <div class="row g-4 mt-3 justify-content-center">
-            <div class="col-lg-8">
-                <div class="feature-card p-4">
-                    <div class="how-step mb-3">
-                        <h6 class="fw-semibold mb-1">1. Image ingestion</h6>
-                        <p class="mb-0">
-                            The image is validated, normalized, and resized so the model can process it
-                            reliably, regardless of the original source.
-                        </p>
-                    </div>
-                    <div class="how-step mb-3">
-                        <h6 class="fw-semibold mb-1">2. AI manipulation detection</h6>
-                        <p class="mb-0">
-                            A computer vision model scans the image and outputs a per-pixel probability
-                            that each region has been synthetically altered.
-                        </p>
-                    </div>
-                    <div class="how-step">
-                        <h6 class="fw-semibold mb-1">3. Visual overlay for reviewers</h6>
-                        <p class="mb-0">
-                            The probabilities are converted into an overlay mask and rendered on top of the original
-                            so reviewers can see the suspicious areas instantly.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- TECHNICAL ARCHITECTURE -->
-<section id="architecture" class="py-5">
+<section id="architecture" class="section-padding" style="background: #f7fafc;">
     <div class="container">
-        <h2 class="section-title text-center">Technical Architecture</h2>
-        <p class="section-subtitle text-center">
-            Built as an API-first service that can power both our hosted UI and your internal tooling.
-        </p>
-
-        <div class="row g-4 mt-3">
-            <div class="col-md-4">
-                <div class="arch-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">1. Frontend</h6>
-                    <p class="mb-0">
-                        A lightweight web client handles uploads, displays overlays,
-                        and exposes a simple “review &amp; export” workflow for investigators.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="arch-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">2. Detection API</h6>
-                    <p class="mb-0">
-                        A stateless detection service receives images via REST, runs them through
-                        the model, and returns a mask plus metadata in JSON – suitable for
-                        integration into claim systems or moderation queues.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="arch-card p-4 h-100">
-                    <h6 class="fw-semibold mb-2">3. Model serving</h6>
-                    <p class="mb-0">
-                        The segmentation model is containerized and deployed behind the API,
-                        allowing horizontal scaling as image volume increases and updates
-                        without downtime.
-                    </p>
-                </div>
-            </div>
+        <div class="text-center mb-5">
+            <h2 class="section-title">Technical Architecture</h2>
+            <p class="section-subtitle">Behind the scenes, FakeImage Detector uses a segmentation model tuned specifically for AI-generated edits, wrapped in a simple web experience.</p>
         </div>
-
-        <div class="row g-4 mt-4 justify-content-center">
-            <div class="col-lg-8">
-                <div class="arch-card p-4">
-                    <h6 class="fw-semibold mb-2">Deployment options</h6>
-                    <ul class="mb-0">
-                        <li><strong>Hosted:</strong> run entirely in our managed environment.</li>
-                        <li><strong>Private cloud:</strong> deploy the API and model into your own VPC for stricter data controls.</li>
-                        <li><strong>API-only:</strong> call the detection endpoint from existing case management or moderation tools.</li>
-                    </ul>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🖼️ Image Preprocessing Pipeline</h4>
+                    <p class="architecture-description">
+                        The image is validated, normalized, and resized so the model can process it reliably, 
+                        regardless of the original source. Handles various formats, resolutions, and compression levels.
+                    </p>
+                </div>
+                
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🧠 Computer Vision Model</h4>
+                    <p class="architecture-description">
+                        A computer vision model scans the image and outputs a per-pixel probability that each region 
+                        has been synthetically altered. The model is trained on diverse manipulation techniques including 
+                        inpainting, object insertion/removal, and generative edits.
+                    </p>
+                </div>
+                
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🎨 Overlay Generation & Rendering</h4>
+                    <p class="architecture-description">
+                        The probabilities are converted into an overlay mask and rendered on top of the original 
+                        so reviewers can see the suspicious areas instantly. Interactive controls allow users to 
+                        adjust sensitivity and explore edge cases.
+                    </p>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="architecture-card">
+                            <h4 class="architecture-title">⚡ Detection API</h4>
+                            <p class="architecture-description">
+                                A stateless detection service receives images via REST, runs them through the model, 
+                                and returns a mask plus metadata in JSON – suitable for integration into claim systems 
+                                or moderation queues.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="architecture-card">
+                            <h4 class="architecture-title">🌐 Web Client Interface</h4>
+                            <p class="architecture-description">
+                                A lightweight web client handles uploads, displays overlays, and exposes a simple 
+                                "review & export" workflow for investigators. Built as an API-first service that can 
+                                power both our hosted UI and your internal tooling.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- DEMO VIDEO -->
-<section id="demo" class="py-5 bg-alt">
+<!-- DEMO SECTION -->
+<section id="demo" class="section-padding">
     <div class="container">
-        <h2 class="section-title text-center">Product walkthrough</h2>
-        <p class="section-subtitle text-center">
-            See how a reviewer uploads an image, inspects the overlay, and exports visual evidence.
-        </p>
-
-        <div class="ratio ratio-16x9 mx-auto" style="max-width: 900px;">
-            <!-- Replace VIDEO_ID_HERE with your actual video ID or full embed URL -->
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE"
-                    title="FakeImage Detector Demo" allowfullscreen></iframe>
+        <div class="text-center mb-5">
+            <h2 class="section-title">See It In Action</h2>
+            <p class="section-subtitle">Watch how a reviewer uploads an image, inspects the overlay, and exports visual evidence.</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="demo-container">
+                    <div class="ratio ratio-16x9">
+                        <!-- Replace with your demo video URL -->
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
+                                allowfullscreen 
+                                style="border-radius: 12px;">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- TEAM -->
-<section id="team" class="py-5">
-    <div class="container text-center">
-        <h2 class="section-title">Team</h2>
-        <p class="section-subtitle">
-            FakeImage Detector is built by a small team of ML engineers and product builders
-            focused on bringing transparency to AI-generated media.
-        </p>
-
-        <div class="row justify-content-center g-4 mt-2">
+<!-- TEAM SECTION -->
+<section id="team" class="section-padding" style="background: #f7fafc;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Meet The Team</h2>
+            <p class="section-subtitle">FakeImage Detector is built by a small team of ML engineers and product builders focused on bringing transparency to AI-generated media.</p>
+        </div>
+        
+        <div class="row justify-content-center">
             <div class="col-md-3">
-                <img src="https://via.placeholder.com/140" class="team-photo mb-2" alt="Team member 1">
-                <h6 class="fw-semibold mb-1">Hima Kethu</h6>
-                <p class="text-muted mb-0" style="font-size:0.9rem;">Machine Learning</p>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" class="team-photo" alt="Hima Kethu">
+                    <h4 class="team-name">Hima Kethu</h4>
+                    <p class="team-role">Machine Learning</p>
+                </div>
             </div>
+            
             <div class="col-md-3">
-                <img src="https://via.placeholder.com/140" class="team-photo mb-2" alt="Team member 2">
-                <h6 class="fw-semibold mb-1">Himaja Jangle</h6>
-                <p class="text-muted mb-0" style="font-size:0.9rem;">Product &amp; Strategy</p>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" class="team-photo" alt="Himaja Jangle">
+                    <h4 class="team-name">Himaja Jangle</h4>
+                    <p class="team-role">Product & Strategy</p>
+                </div>
             </div>
+            
             <div class="col-md-3">
-                <img src="https://via.placeholder.com/140" class="team-photo mb-2" alt="Team member 3">
-                <h6 class="fw-semibold mb-1">Maya Leviten</h6>
-                <p class="text-muted mb-0" style="font-size:0.9rem;">Data &amp; Infrastructure</p>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" class="team-photo" alt="Maya Leviten">
+                    <h4 class="team-name">Maya Leviten</h4>
+                    <p class="team-role">Data & Infrastructure</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-alt text-center py-3 mt-2">
-    <p class="mb-0">© 2025 FakeImage Detector. All rights reserved.</p>
+<footer>
+    <div class="container">
+        <p class="mb-2" style="font-size: 1.1rem; font-weight: 600;">FakeImage Detector</p>
+        <p class="mb-0" style="opacity: 0.8;">Bringing transparency to AI-generated media</p>
+        <p class="mt-3 mb-0" style="opacity: 0.6; font-size: 0.9rem;">&copy; 2024 FakeImage Detector. All rights reserved.</p>
+    </div>
 </footer>
 
 <!-- Bootstrap JS -->

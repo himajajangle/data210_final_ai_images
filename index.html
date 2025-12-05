@@ -32,10 +32,7 @@
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.04"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
             opacity: 0.35;
         }
@@ -143,6 +140,7 @@
             }
         }
 
+        /* Generic sections */
         .section-padding {
             padding: 100px 0;
         }
@@ -159,7 +157,8 @@
             color: #718096;
             margin-bottom: 3rem;
         }
-        
+
+        /* Problem / features */
         .feature-card {
             background: white;
             padding: 40px;
@@ -204,6 +203,19 @@
         .problem-section {
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
         }
+
+        /* How It Works – LIGHT */
+        #how {
+            background: #f7fafc;
+        }
+        
+        #how .section-title {
+            color: #1e293b;
+        }
+        
+        #how .section-subtitle {
+            color: #475569;
+        }
         
         .workflow-step {
             position: relative;
@@ -225,6 +237,7 @@
             justify-content: center;
             font-size: 1.5rem;
             font-weight: 700;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         
         .workflow-title {
@@ -239,7 +252,25 @@
             color: #4a5568;
             line-height: 1.7;
         }
+
+        #how .workflow-step {
+            padding: 24px 24px 24px 90px;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 28px;
+        }
         
+        #how .workflow-title {
+            color: #1e293b;
+        }
+        
+        #how .workflow-description {
+            color: #475569;
+        }
+
+        /* Architecture */
         .architecture-card {
             background: white;
             padding: 35px;
@@ -261,7 +292,8 @@
             color: #4a5568;
             line-height: 1.7;
         }
-        
+
+        /* Team */
         .team-member {
             text-align: center;
             margin-bottom: 40px;
@@ -273,6 +305,7 @@
             border-radius: 50%;
             margin-bottom: 20px;
             border: 4px solid #667eea;
+            object-fit: cover;
         }
         
         .team-name {
@@ -286,125 +319,40 @@
             font-size: 1rem;
             color: #718096;
         }
-        
-        .demo-container {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        
-        footer {
-            background: #020617;
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-        
-        /* DARK NAVBAR */
-        .navbar-custom {
-            background: rgba(2,6,23,0.96) !important;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 2px 14px rgba(0,0,0,0.8);
-        }
-        
-        .navbar-custom .navbar-brand {
-            font-weight: 700;
-            color: #f9fafb !important;
-            font-size: 1.3rem;
-        }
-        
-        .navbar-custom .nav-link {
-            color: #e5e7eb !important;
-            font-weight: 500;
-            margin: 0 10px;
-        }
-        
-        .navbar-custom .nav-link:hover {
-            color: #38bdf8 !important;
-        }
-        /* ---- Improve readability in "How It Works" ---- */
 
-        #how {
-            background: #020617;
-        }
-        
-        #how .section-title {
-            color: #e5e7eb;
-        }
-        
-        #how .section-subtitle {
-            color: #9ca3af;
-        }
-        
-        #how .workflow-title {
-            color: #e5e7eb;
-        }
-        
-        #how .workflow-description {
-            color: #cbd5f5;
-        }
-        
-        #how .step-number {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            box-shadow: 0 8px 24px rgba(15,23,42,0.8);
-        }
-        
-        /* Lighten the How It Works cards */
-        #how .workflow-step {
-            padding: 24px 24px 24px 90px;
-            border-radius: 16px;
-        
-            /* NEW LIGHTER BOX */
-            background: rgba(255, 255, 255, 0.06);  /* soft translucent white */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
-            margin-bottom: 28px;
-        }
-        
-        /* Make the titles and text slightly brighter for readability */
-        #how .workflow-title {
-            color: #f1f5f9;   /* lighter slate */
-        }
-        
-        #how .workflow-description {
-            color: #e2e8f0;
-        }
-
-        
+        /* Demo section (dark background, light text, white card) */
         #demo {
-            background: #020617;      /* same dark navy as the site */
+            background: #020617;
         }
         
         #demo .section-title {
-            color: #e5e7eb;           /* white-ish */
+            color: #e5e7eb;
             font-weight: 800;
         }
         
         #demo .section-subtitle {
-            color: #94a3b8;           /* soft slate blue */
+            color: #94a3b8;
             font-size: 1.25rem;
         }
         
         #demo .demo-container {
-            background: #ffffff;      /* keep video card white */
+            background: #ffffff;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            padding: 40px;
         }
 
-       /* ---- Mission Section (light) ---- */
-
+        /* Mission – DARK */
         .mission-section {
-            background: #f7fafc;              /* same light bg as Technical Architecture */
+            background: #020617;
         }
         
         #mission .section-title {
-            color: #111827;                   /* dark heading */
+            color: #e5e7eb;
         }
         
         #mission .section-subtitle {
-            color: #4b5563;                   /* slate subtitle */
+            color: #9ca3af;
         }
         
         .mission-row {
@@ -415,47 +363,37 @@
             height: 100%;
             border-radius: 28px;
             padding: 40px 36px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             justify-content: center;
             text-align: center;
         }
         
-        /* subtle color tint per card */
-        .mission-card--blue {
-            background: radial-gradient(circle at top left, #eff6ff, #ffffff);
-            border-color: #bfdbfe;
-        }
-        
+        .mission-card--blue,
         .mission-card--green {
-            background: radial-gradient(circle at top left, #ecfdf5, #ffffff);
-            border-color: #6ee7b7;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
         }
         
         .mission-card-title {
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1.4rem;
-            color: #0f172a;                   /* dark text */
-        }
-        
-        .mission-card--green .mission-card-title {
-            color: #065f46;                   /* green-ish heading for the right card */
+            color: #f1f5f9;
         }
         
         .mission-card-text {
             font-size: 1.1rem;
             line-height: 1.7;
-            color: #4b5563;                   /* darker body text for readability */
+            color: #cbd5e1;
         }
 
-        /* ---- Model Performance / Results Section ---- */
-        
+        /* Results / process – DARK */
         .results-section {
-            background: #020617;  /* dark navy like other sections */
+            background: #020617;
         }
         
         #results .section-title,
@@ -500,21 +438,56 @@
             object-fit: contain;
         }
 
-        /* Reduce extra space above the Demo section */
+        /* Spacing tweaks */
         #demo.section-padding {
-            padding-top: 40px !important;
+            padding-top: 40px;
         }
 
-        /* Reduce empty space under the Mission section */
         #mission.section-padding {
-            padding-bottom: 40px !important;
+            padding-bottom: 40px;
         }
 
-
-
-        </style>
-
+        /* Demo container (generic use) */
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background: #020617;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        /* DARK NAVBAR */
+        .navbar-custom {
+            background: rgba(2,6,23,0.96) !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            color: #f9fafb !important;
+            font-size: 1.3rem;
+        }
+        
+        .navbar-custom .nav-link {
+            color: #e5e7eb !important;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            color: #38bdf8 !important;
+        }
+    </style>
 </head>
+
 
 <body>
 

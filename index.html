@@ -436,17 +436,19 @@
             color: #e5e7eb;
         }
 
-        /* ---- Model Performance / Results Section ---- */
+        /* ---- Model Process & Results Section ---- */
         
         .results-section {
             background: #020617;  /* dark navy like other sections */
         }
         
-        #results .section-title {
+        #results .section-title,
+        #process .section-title {
             color: #e5e7eb;
         }
         
-        #results .section-subtitle {
+        #results .section-subtitle,
+        #process .section-subtitle {
             color: #9ca3af;
         }
         
@@ -513,6 +515,7 @@
                 <li class="nav-item"><a class="nav-link" href="#mission">Our Mission</a></li>
                 <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
                 <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                <li class="nav-item"><a class="nav-link" href="#process">Model</a></li>
                 <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
             </ul>
@@ -721,6 +724,30 @@
             </div>
         </div>
     </div>
+</section>
+
+<!-- MODEL PROCESS SECTION -->
+<section id="process" class="section-padding results-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Model Process</h2>
+      <p class="section-subtitle">
+        High-level pipeline from raw datasets to a deployed detector.
+      </p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-11">
+        <div class="results-card">
+          <img
+            src="images/model_process.png"
+            alt="Model training and deployment pipeline"
+            class="results-img"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- MODEL PERFORMANCE SECTION -->

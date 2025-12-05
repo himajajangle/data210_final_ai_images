@@ -350,13 +350,6 @@
             box-shadow: 0 8px 24px rgba(15,23,42,0.8);
         }
         
-        #how .workflow-step {
-            padding: 24px 24px 24px 90px;
-            border-radius: 16px;
-            background: rgba(15,23,42,0.85);
-            border: 1px solid rgba(30,64,175,0.7);
-            margin-bottom: 28px;
-        }   
         /* Lighten the How It Works cards */
         #how .workflow-step {
             padding: 24px 24px 24px 90px;
@@ -400,7 +393,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
-        /* ---- Mission Section ---- */
+                /* ---- Mission Section ---- */
 
         .mission-section {
             background: radial-gradient(circle at top left, #111827, #020617);
@@ -444,7 +437,7 @@
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1.4rem;
-            color: #bfdbfe; /* light blue/green depending on bg */
+            color: #bfdbfe;
         }
         
         .mission-card--green .mission-card-title {
@@ -457,41 +450,19 @@
             color: #e5e7eb;
         }
 
-        <!-- MODEL PROCESS SECTION -->
-        <section id="process" class="section-padding results-section">
-          <div class="container">
-            <div class="text-center mb-5">
-              <h2 class="section-title">Model Process</h2>
-              <p class="section-subtitle">
-                High-level pipeline from raw datasets to a deployed detector.
-              </p>
-            </div>
-        
-            <div class="row justify-content-center">
-              <div class="col-lg-11">
-                <div class="results-card">
-                  <img
-                    src="images/model_process.png"
-                    alt="Model training and deployment pipeline"
-                    class="results-img"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         /* ---- Model Performance / Results Section ---- */
         
         .results-section {
             background: #020617;  /* dark navy like other sections */
         }
         
-        #results .section-title {
+        #results .section-title,
+        #process .section-title {
             color: #e5e7eb;
         }
         
-        #results .section-subtitle {
+        #results .section-subtitle,
+        #process .section-subtitle {
             color: #9ca3af;
         }
         
@@ -529,13 +500,14 @@
 
         /* Reduce extra space above the Demo section */
         #demo.section-padding {
-        padding-top: 40px !important;
+            padding-top: 40px !important;
         }
 
         /* Reduce empty space under the Mission section */
         #mission.section-padding {
             padding-bottom: 40px !important;
         }
+
 
 
         </style>

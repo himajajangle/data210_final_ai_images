@@ -356,7 +356,30 @@
             background: rgba(15,23,42,0.85);
             border: 1px solid rgba(30,64,175,0.7);
             margin-bottom: 28px;
-        }        
+        }   
+        /* Lighten the How It Works cards */
+        #how .workflow-step {
+            padding: 24px 24px 24px 90px;
+            border-radius: 16px;
+        
+            /* NEW LIGHTER BOX */
+            background: rgba(255, 255, 255, 0.06);  /* soft translucent white */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+            margin-bottom: 28px;
+        }
+        
+        /* Make the titles and text slightly brighter for readability */
+        #how .workflow-title {
+            color: #f1f5f9;   /* lighter slate */
+        }
+        
+        #how .workflow-description {
+            color: #e2e8f0;
+        }
+
+        
         #demo {
             background: #020617;      /* same dark navy as the site */
         }
@@ -463,45 +486,6 @@
         .results-section {
             background: #020617;  /* dark navy like other sections */
         }
-        /* MODEL PERFORMANCE — match Technical Architecture */
-.results-section {
-    background: #f7fafc !important;  /* same light background */
-    padding-top: 80px;
-    padding-bottom: 80px;
-}
-
-#results .section-title {
-    color: #2d3748;   /* dark gray like architecture section */
-}
-
-#results .section-subtitle {
-    color: #4a5568;
-}
-
-/* Make the card look like the architecture cards */
-.results-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
-
-.results-card-title {
-    color: #2d3748;
-}
-
-.results-card-text {
-    color: #4a5568;
-}
-
-/* Keep the images sharp with a subtle border */
-.results-img {
-    border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    background: #ffffff;
-}
-
         
         #results .section-title {
             color: #e5e7eb;
@@ -552,16 +536,6 @@
         #mission.section-padding {
             padding-bottom: 40px !important;
         }
-
-        /* Brighter text for Model Process section */
-        #process .section-title {
-            color: #f9fafb;   /* almost white */
-        }
-        
-        #process .section-subtitle {
-            color: #cbd5f5;   /* lighter slate blue */
-        }
-
 
 
         </style>

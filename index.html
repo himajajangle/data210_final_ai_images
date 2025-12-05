@@ -750,49 +750,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Quantitative metrics -->
-    <div class="row g-4">
-      <div class="col-lg-4">
-        <div class="results-card">
-          <h4 class="results-card-title">Training &amp; Validation Loss</h4>
-          <p class="results-card-text">
-            Loss steadily decreases over 200 epochs, with validation loss closely tracking training loss,
-            indicating good generalization and no severe overfitting.
-          </p>
-          <img src="images/train_val_loss_vit.png"
-               alt="Train vs validation loss over epochs"
-               class="results-img">
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="results-card">
-          <h4 class="results-card-title">Validation IoU</h4>
-          <p class="results-card-text">
-            Intersection-over-Union improves rapidly and plateaus around the high 0.80s–0.90s,
-            reflecting accurate overlap between predicted and ground-truth masks.
-          </p>
-          <img src="images/val_iou_vit.png"
-               alt="Validation IoU over epochs"
-               class="results-img">
-        </div>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="results-card">
-          <h4 class="results-card-title">Precision, Recall &amp; F-Score</h4>
-          <p class="results-card-text">
-            Precision, recall, and F-score all converge above ~0.9, balancing false positives
-            and false negatives for reliable downstream decisions.
-          </p>
-          <img src="images/precision_recall_fscore_vit.png"
-               alt="Precision, Recall, F-score over epochs"
-               class="results-img">
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 

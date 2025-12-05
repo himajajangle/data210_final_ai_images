@@ -1,890 +1,909 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FAkeImage Detector - Trust What You See</title>
-
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-
-  <style>
-    body {
-      scroll-behavior: smooth;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: #020617;
-    }
-
-    /* HERO (dark blue gradient) */
-    .hero-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: radial-gradient(circle at top left, #22d3ee33, transparent 55%),
-        radial-gradient(circle at bottom right, #6366f133, transparent 55%),
-        linear-gradient(135deg, #020617 0%, #020617 100%);
-      color: white;
-      position: relative;
-      overflow: hidden;
-      padding: 140px 0 110px 0;
-    }
-
-    .hero-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,<svg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'><g fill='none' fill-rule='evenodd'><g fill='%23ffffff' fill-opacity='0.04'><path d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/></g></g></svg>");
-      opacity: 0.35;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.8rem;
-      color: #9ca3af;
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-title {
-      font-size: clamp(2.8rem, 4.4vw, 3.7rem);
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      line-height: 1.15;
-    }
-
-    .hero-title span {
-      color: #38bdf8;
-    }
-
-    .hero-subtitle {
-      font-size: 1.3rem;
-      font-weight: 300;
-      margin-bottom: 2.4rem;
-      opacity: 0.95;
-      max-width: 520px;
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 16px 48px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      color: #ffffff;
-      border: none;
-      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.55);
-      transition: all 0.25s ease;
-      text-decoration: none;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(16, 185, 129, 0.8);
-      color: #ffffff;
-    }
-
-    /* Hero image */
-    .hero-image-wrapper {
-      position: relative;
-    }
-
-    .hero-main-img {
-      width: 100%;
-      max-width: 520px;
-      height: 260px;
-      border-radius: 22px;
-      object-fit: cover;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.85);
-    }
-
-    .hero-mask-img {
-      position: absolute;
-      right: 5%;
-      bottom: -14%;
-      width: 55%;
-      height: 170px;
-      border-radius: 18px;
-      object-fit: cover;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
-    }
-
-    @media (max-width: 992px) {
-      .hero-section {
-        padding-top: 120px;
-        text-align: center;
-      }
-      .hero-subtitle {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .hero-image-wrapper {
-        margin-top: 40px;
-      }
-      .hero-main-img {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .hero-mask-img {
-        position: static;
-        width: 80%;
-        margin: 18px auto 0 auto;
-        display: block;
-      }
-    }
-
-    .section-padding {
-      padding: 100px 0;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #2d3748;
-    }
-
-    .section-subtitle {
-      font-size: 1.2rem;
-      color: #718096;
-      margin-bottom: 3rem;
-    }
-
-    .feature-card {
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      height: 100%;
-      transition: all 0.3s ease;
-      border: 1px solid #e2e8f0;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-    }
-
-    .feature-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      color: #2d3748;
-    }
-
-    .feature-description {
-      font-size: 1rem;
-      color: #4a5568;
-      line-height: 1.7;
-    }
-
-    .problem-section {
-      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-    }
-
-    /* HOW IT WORKS */
-    .workflow-step {
-      position: relative;
-      padding-left: 80px;
-      margin-bottom: 50px;
-    }
-
-    .step-number {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.8);
-    }
-
-    .workflow-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #e5e7eb;
-    }
-
-    .workflow-description {
-      font-size: 1.1rem;
-      color: #cbd5f5;
-      line-height: 1.7;
-    }
-
-    #how {
-      background: #020617;
-    }
-
-    #how .section-title {
-      color: #e5e7eb;
-    }
-
-    #how .section-subtitle {
-      color: #9ca3af;
-    }
-
-    #how .workflow-step {
-      padding: 24px 24px 24px 90px;
-      border-radius: 16px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(30, 64, 175, 0.7);
-      margin-bottom: 28px;
-    }
-
-    /* TECH ARCH + MODEL SECTIONS SHARED COLORS */
-    .dark-section {
-      background: #020617;
-    }
-
-    .dark-section .section-title {
-      color: #e5e7eb;
-    }
-
-    .dark-section .section-subtitle {
-      color: #9ca3af;
-    }
-
-    .architecture-card {
-      background: radial-gradient(circle at top left, #020617, #020617);
-      padding: 32px;
-      border-radius: 20px;
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.85);
-      margin-bottom: 24px;
-      border: 1px solid rgba(37, 99, 235, 0.7);
-    }
-
-    .architecture-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #e5e7eb;
-    }
-
-    .architecture-description {
-      font-size: 1rem;
-      color: #cbd5f5;
-      line-height: 1.7;
-    }
-
-    /* Mission */
-    .mission-section {
-      background: radial-gradient(circle at top left, #111827, #020617);
-    }
-
-    #mission .section-title {
-      color: #e5e7eb;
-    }
-
-    #mission .section-subtitle {
-      color: #9ca3af;
-    }
-
-    .mission-row {
-      align-items: stretch;
-    }
-
-    .mission-card {
-      height: 100%;
-      border-radius: 32px;
-      padding: 40px 36px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .mission-card--blue {
-      background: radial-gradient(circle at top left, #1e293b, #020617);
-      border-color: rgba(59, 130, 246, 0.7);
-    }
-
-    .mission-card--green {
-      background: radial-gradient(circle at top left, #064e3b, #020617);
-      border-color: rgba(16, 185, 129, 0.7);
-    }
-
-    .mission-card-title {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 1.4rem;
-      color: #bfdbfe;
-    }
-
-    .mission-card--green .mission-card-title {
-      color: #6ee7b7;
-    }
-
-    .mission-card-text {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #e5e7eb;
-    }
-
-    /* Model Process + Results cards */
-    .results-section {
-      background: #020617;
-    }
-
-    #results .section-title,
-    #process .section-title {
-      color: #e5e7eb;
-    }
-
-    #results .section-subtitle,
-    #process .section-subtitle {
-      color: #9ca3af;
-    }
-
-    .results-card {
-      background: #020617;
-      border-radius: 24px;
-      padding: 24px 24px 26px 24px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.9);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .results-card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #e5e7eb;
-      margin-bottom: 0.75rem;
-    }
-
-    .results-card-text {
-      font-size: 0.98rem;
-      color: #cbd5f5;
-      margin-bottom: 1.2rem;
-    }
-
-    .results-img {
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid rgba(30, 64, 175, 0.8);
-      background-color: #000;
-      object-fit: contain;
-    }
-
-    /* Demo */
-    #demo {
-      background: #020617;
-    }
-
-    #demo .section-title {
-      color: #e5e7eb;
-      font-weight: 800;
-    }
-
-    #demo .section-subtitle {
-      color: #94a3b8;
-      font-size: 1.25rem;
-    }
-
-    #demo .demo-container {
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Team */
-    .team-member {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .team-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 4px solid #667eea;
-    }
-
-    .team-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 5px;
-      color: #2d3748;
-    }
-
-    footer {
-      background: #020617;
-      color: white;
-      padding: 40px 0;
-      text-align: center;
-    }
-
-    /* DARK NAVBAR */
-    .navbar-custom {
-      background: rgba(2, 6, 23, 0.96) !important;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
-    }
-
-    .navbar-custom .navbar-brand {
-      font-weight: 700;
-      color: #f9fafb !important;
-      font-size: 1.3rem;
-    }
-
-    .navbar-custom .nav-link {
-      color: #e5e7eb !important;
-      font-weight: 500;
-      margin: 0 10px;
-    }
-
-    .navbar-custom .nav-link:hover {
-      color: #38bdf8 !important;
-    }
-
-    /* Spacing tweaks */
-    #demo.section-padding {
-      padding-top: 40px !important;
-    }
-
-    #mission.section-padding {
-      padding-bottom: 40px !important;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAkeImage Detector - Trust What You See</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { 
+            scroll-behavior: smooth;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #020617;
+        }
+        
+        /* HERO (dark blue gradient) */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at top left, #22d3ee33, transparent 55%),
+                        radial-gradient(circle at bottom right, #6366f133, transparent 55%),
+                        linear-gradient(135deg, #020617 0%, #020617 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 140px 0 110px 0;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.04"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
+            opacity: 0.35;
+        }
+        
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 0.9rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.8rem, 4.4vw, 3.7rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+        }
+        
+        .hero-title span {
+            color: #38bdf8;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 2.4rem;
+            opacity: 0.95;
+            max-width: 520px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.55);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(16, 185, 129, 0.8);
+            color: #ffffff;
+        }
+
+        /* Hero image */
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        .hero-main-img {
+            width: 100%;
+            max-width: 520px;
+            height: 260px;
+            border-radius: 22px;
+            object-fit: cover;
+            border: 1px solid rgba(148,163,184,0.6);
+            box-shadow: 0 18px 45px rgba(15,23,42,0.85);
+        }
+
+        .hero-mask-img {
+            position: absolute;
+            right: 5%;
+            bottom: -14%;
+            width: 55%;
+            height: 170px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 1px solid rgba(56,189,248,0.7);
+            box-shadow: 0 14px 35px rgba(15,23,42,0.9);
+        }
+
+        @media (max-width: 992px) {
+            .hero-section {
+                padding-top: 120px;
+                text-align: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image-wrapper {
+                margin-top: 40px;
+            }
+            .hero-main-img {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-mask-img {
+                position: static;
+                width: 80%;
+                margin: 18px auto 0 auto;
+                display: block;
+            }
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        .problem-section {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+        
+        .workflow-step {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .workflow-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        .workflow-description {
+            font-size: 1.1rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        .architecture-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .architecture-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2d3748;
+        }
+        
+        .architecture-description {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        
+        .team-member {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .team-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 4px solid #667eea;
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+        
+        .team-role {
+            font-size: 1rem;
+            color: #718096;
+        }
+        
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            background: #020617;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        /* DARK NAVBAR */
+        .navbar-custom {
+            background: rgba(2,6,23,0.96) !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            color: #f9fafb !important;
+            font-size: 1.3rem;
+        }
+        
+        .navbar-custom .nav-link {
+            color: #e5e7eb !important;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .navbar-custom .nav-link:hover {
+            color: #38bdf8 !important;
+        }
+        /* ---- Improve readability in "How It Works" ---- */
+
+        #how {
+            background: #020617;
+        }
+        
+        #how .section-title {
+            color: #e5e7eb;
+        }
+        
+        #how .section-subtitle {
+            color: #9ca3af;
+        }
+        
+        #how .workflow-title {
+            color: #e5e7eb;
+        }
+        
+        #how .workflow-description {
+            color: #cbd5f5;
+        }
+        
+        #how .step-number {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            box-shadow: 0 8px 24px rgba(15,23,42,0.8);
+        }
+        
+        #how .workflow-step {
+            padding: 24px 24px 24px 90px;
+            border-radius: 16px;
+            background: rgba(15,23,42,0.85);
+            border: 1px solid rgba(30,64,175,0.7);
+            margin-bottom: 28px;
+        }        
+        #demo {
+            background: #020617;      /* same dark navy as the site */
+        }
+        
+        #demo .section-title {
+            color: #e5e7eb;           /* white-ish */
+            font-weight: 800;
+        }
+        
+        #demo .section-subtitle {
+            color: #94a3b8;           /* soft slate blue */
+            font-size: 1.25rem;
+        }
+        
+        #demo .demo-container {
+            background: #ffffff;      /* keep video card white */
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        /* ---- Mission Section ---- */
+
+        .mission-section {
+            background: radial-gradient(circle at top left, #111827, #020617);
+        }
+        
+        #mission .section-title {
+            color: #e5e7eb;
+        }
+        
+        #mission .section-subtitle {
+            color: #9ca3af;
+        }
+        
+        .mission-row {
+            align-items: stretch;
+        }
+        
+        .mission-card {
+            height: 100%;
+            border-radius: 32px;
+            padding: 40px 36px;
+            border: 1px solid rgba(148,163,184,0.5);
+            box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .mission-card--blue {
+            background: radial-gradient(circle at top left, #1e293b, #020617);
+            border-color: rgba(59,130,246,0.7);
+        }
+        
+        .mission-card--green {
+            background: radial-gradient(circle at top left, #064e3b, #020617);
+            border-color: rgba(16,185,129,0.7);
+        }
+        
+        .mission-card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.4rem;
+            color: #bfdbfe; /* light blue/green depending on bg */
+        }
+        
+        .mission-card--green .mission-card-title {
+            color: #6ee7b7;
+        }
+        
+        .mission-card-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e5e7eb;
+        }
+
+        <!-- MODEL PROCESS SECTION -->
+        <section id="process" class="section-padding results-section">
+          <div class="container">
+            <div class="text-center mb-5">
+              <h2 class="section-title">Model Process</h2>
+              <p class="section-subtitle">
+                High-level pipeline from raw datasets to a deployed detector.
+              </p>
+            </div>
+        
+            <div class="row justify-content-center">
+              <div class="col-lg-11">
+                <div class="results-card">
+                  <img
+                    src="images/model_process.png"
+                    alt="Model training and deployment pipeline"
+                    class="results-img"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        /* ---- Model Performance / Results Section ---- */
+        
+        .results-section {
+            background: #020617;  /* dark navy like other sections */
+        }
+        
+        #results .section-title {
+            color: #e5e7eb;
+        }
+        
+        #results .section-subtitle {
+            color: #9ca3af;
+        }
+        
+        .results-card {
+            background: #020617;
+            border-radius: 24px;
+            padding: 24px 24px 26px 24px;
+            border: 1px solid rgba(148,163,184,0.6);
+            box-shadow: 0 14px 36px rgba(15,23,42,0.9);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .results-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e5e7eb;
+            margin-bottom: 0.75rem;
+        }
+        
+        .results-card-text {
+            font-size: 0.98rem;
+            color: #cbd5f5;
+            margin-bottom: 1.2rem;
+        }
+        
+        .results-img {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(30,64,175,0.8);
+            background-color: #000;
+            object-fit: contain;
+        }
+
+        /* Reduce extra space above the Demo section */
+        #demo.section-padding {
+        padding-top: 40px !important;
+        }
+
+        /* Reduce empty space under the Mission section */
+        #mission.section-padding {
+            padding-bottom: 40px !important;
+        }
+
+
+        </style>
+
 </head>
 
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
     <div class="container">
-      <a class="navbar-brand" href="#hero">FAkeImage Detector</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navMenu"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <a class="navbar-brand" href="#hero">FAkeImage Detector</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="#problem">Why It Matters</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#mission">Our Mission</a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="#architecture">Architecture</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#process">Model Process</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#results">Model Performance</a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
-          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-        </ul>
-      </div>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#problem">Why It Matters</a></li>
+                <li class="nav-item"><a class="nav-link" href="#mission">Our Mission</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
+                <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="hero-section">
+<!-- HERO SECTION -->
+<section id="hero" class="hero-section">
     <div class="container hero-inner">
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-6">
-          <div class="hero-eyebrow">AI-EDITED IMAGE DETECTION</div>
-          <h1 class="hero-title">
-            Trust what you see<br />
-            <span>in every image.</span>
-          </h1>
-          <p class="hero-subtitle">
-            Upload a photo and instantly see where AI has altered it.
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6">
+                <div class="hero-eyebrow">AI-EDITED IMAGE DETECTION</div>
+                <h1 class="hero-title">
+                    Trust what you see<br>
+                    <span>in every image.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload a photo and instantly see where AI has altered it.
+                </p>
+                <a href="#demo" class="cta-button">See the demo</a>
+            </div>
+
+            <div class="col-lg-6 hero-image-wrapper">
+                <img
+                    class="hero-main-img"
+                    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+                    alt="Example original image"
+                />
+                <img
+                    class="hero-mask-img"
+                    src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=900&q=80"
+                    alt="Example detection overlay"
+                />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section id="problem" class="section-padding problem-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Why FAkeImage Detector Exists</h2>
+            <p class="section-subtitle">Generative AI has made credible fakes cheap and instant. Traditional fraud tools weren't built to understand pixels.</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3 class="feature-title">Real Stakes, Real Losses</h3>
+                    <p class="feature-description">
+                        Claims, credit, and compliance teams are increasingly asked to rely on user-submitted photos. 
+                        When those photos are wrong, the losses are real.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3 class="feature-title">Invisible Manipulation</h3>
+                    <p class="feature-description">
+                        Modern AI inpainting tools produce edits that are nearly impossible to spot, 
+                        even for trained reviewers on large screens.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Beyond Binary Scores</h3>
+                    <p class="feature-description">
+                        A single "real/fake" score doesn't make a case. Pixel-level overlays give reviewers 
+                        something they can screenshot, annotate, and share.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- MISSION SECTION -->
+<section id="mission" class="section-padding mission-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Our Mission</h2>
+      <p class="section-subtitle">
+        A clear mission and goal: make AI-edited images obvious, not invisible.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center mission-row">
+      <div class="col-lg-5">
+        <div class="mission-card mission-card--blue">
+          <h3 class="mission-card-title">The Vision</h3>
+          <p class="mission-card-text">
+            Build a reliable, scalable system that leverages machine learning to
+            quickly and accurately detect AI-augmented sections of images.
           </p>
-          <a href="#demo" class="cta-button">See the demo</a>
         </div>
+      </div>
 
-        <div class="col-lg-6 hero-image-wrapper">
-          <img
-            class="hero-main-img"
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-            alt="Example original image"
-          />
-          <img
-            class="hero-mask-img"
-            src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=900&q=80"
-            alt="Example detection overlay"
-          />
+      <div class="col-lg-5">
+        <div class="mission-card mission-card--green">
+          <h3 class="mission-card-title">Our Goal</h3>
+          <p class="mission-card-text">
+            Give reviewers and decision-makers the tools they need to know
+            whether they can trust digital content before they act on it.
+          </p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROBLEM SECTION -->
-  <section id="problem" class="section-padding problem-section">
+    
+
+<!-- HOW IT WORKS -->
+<section id="how" class="section-padding">
     <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Why FAkeImage Detector Exists</h2>
-        <p class="section-subtitle">
-          Generative AI has made credible fakes cheap and instant. Traditional fraud tools weren't built to understand pixels.
-        </p>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">📸</div>
-            <h3 class="feature-title">Real Stakes, Real Losses</h3>
-            <p class="feature-description">
-              Claims, credit, and compliance teams are increasingly asked to rely on user-submitted photos. When those photos are wrong, the losses are real.
-            </p>
-          </div>
+        <div class="text-center mb-5">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">A focused workflow that fits into existing review processes instead of replacing them.</p>
         </div>
-
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">🎭</div>
-            <h3 class="feature-title">Invisible Manipulation</h3>
-            <p class="feature-description">
-              Modern AI inpainting tools produce edits that are nearly impossible to spot, even for trained reviewers on large screens.
-            </p>
-          </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h3 class="workflow-title">Upload Your Image</h3>
+                    <p class="workflow-description">
+                        Drag-and-drop an image or paste a URL. The system runs detection in the background 
+                        and returns an overlay in seconds.
+                    </p>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h3 class="workflow-title">Review the Detection</h3>
+                    <p class="workflow-description">
+                        See which parts of the photo were likely added, removed, or heavily altered. 
+                        See what percentage of pixels have been altered.
+                    </p>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h3 class="workflow-title">Export & Document</h3>
+                    <p class="workflow-description">
+                        Export image with mask overlay for claim notes, investigations, 
+                        or internal documentation – no extra tooling required.
+                    </p>
+                </div>
+            </div>
         </div>
-
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">🔍</div>
-            <h3 class="feature-title">Beyond Binary Scores</h3>
-            <p class="feature-description">
-              A single "real/fake" score doesn't make a case. Pixel-level overlays give reviewers something they can screenshot, annotate, and share.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- MISSION SECTION -->
-  <section id="mission" class="section-padding mission-section">
+  </div>
+                
+<!-- TECHNICAL ARCHITECTURE -->
+<section id="architecture" class="section-padding" style="background: #f7fafc;">
     <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Our Mission</h2>
-        <p class="section-subtitle">
-          A clear mission and goal: make AI-edited images obvious, not invisible.
-        </p>
-      </div>
-
-      <div class="row g-4 justify-content-center mission-row">
-        <div class="col-lg-5">
-          <div class="mission-card mission-card--blue">
-            <h3 class="mission-card-title">The Vision</h3>
-            <p class="mission-card-text">
-              Build a reliable, scalable system that leverages machine learning to quickly and accurately detect AI-augmented sections of images.
+        <div class="text-center mb-5">
+            <h2 class="section-title">Technical Architecture</h2>
+            <p class="section-subtitle">
+                Behind the scenes, FakeImage Detector uses a segmentation model tuned specifically 
+                for AI-generated edits, wrapped in a simple web experience.
             </p>
-          </div>
         </div>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
 
-        <div class="col-lg-5">
-          <div class="mission-card mission-card--green">
-            <h3 class="mission-card-title">Our Goal</h3>
-            <p class="mission-card-text">
-              Give reviewers and decision-makers the tools they need to know whether they can trust digital content before they act on it.
-            </p>
-          </div>
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🖼️ Image Preprocessing Pipeline</h4>
+                    <p class="architecture-description">
+                        The image is validated, normalized, and resized so the model can process it reliably,
+                        regardless of the original source. Handles various formats, resolutions, and compression levels.
+                    </p>
+                </div>
+
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🧠 Computer Vision Model</h4>
+                    <p class="architecture-description">
+                        A computer vision model scans the image and outputs a per-pixel probability that each region 
+                        has been synthetically altered. The model is trained on AI inpainting techniques.
+                    </p>
+                </div>
+
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🎨 Overlay Generation & Rendering</h4>
+                    <p class="architecture-description">
+                        The probabilities are converted into an overlay mask and rendered on top of the original 
+                        so reviewers can see the suspicious areas instantly.
+                    </p>
+                </div>
+
+                <div class="architecture-card">
+                    <h4 class="architecture-title">🌐 Web Client Interface</h4>
+                    <p class="architecture-description">
+                        A lightweight Streamlit interface handles image uploads, runs inference through our PyTorch model,
+                        and visualizes the detection overlay for easy review and export.
+                    </p>
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- HOW IT WORKS -->
-  <section id="how" class="section-padding">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">
-          A focused workflow that fits into existing review processes instead of replacing them.
-        </p>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <div class="workflow-step">
-            <div class="step-number">1</div>
-            <h3 class="workflow-title">Upload Your Image</h3>
-            <p class="workflow-description">
-              Drag-and-drop an image or paste a URL. The system runs detection in the background and returns an overlay in seconds.
-            </p>
-          </div>
-
-          <div class="workflow-step">
-            <div class="step-number">2</div>
-            <h3 class="workflow-title">Review the Detection</h3>
-            <p class="workflow-description">
-              See which parts of the photo were likely added, removed, or heavily altered. See what percentage of pixels have been altered.
-            </p>
-          </div>
-
-          <div class="workflow-step">
-            <div class="step-number">3</div>
-            <h3 class="workflow-title">Export & Document</h3>
-            <p class="workflow-description">
-              Export images with mask overlays for claim notes, investigations, or internal documentation – no extra tooling required.
-            </p>
-          </div>
+    <!-- MODEL PROCESS SECTION -->
+    <section id="process" class="section-padding results-section">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-title">Model Process</h2>
+          <p class="section-subtitle">
+            High-level pipeline from raw datasets to a deployed detector.
+          </p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TECHNICAL ARCHITECTURE -->
-  <section id="architecture" class="section-padding dark-section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Technical Architecture</h2>
-        <p class="section-subtitle">
-          Behind the scenes, FAkeImage Detector uses a segmentation model tuned specifically for AI-generated edits, wrapped in a simple web experience.
-        </p>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-10 mx-auto">
-          <div class="architecture-card">
-            <h4 class="architecture-title">🖼️ Image Preprocessing Pipeline</h4>
-            <p class="architecture-description">
-              The image is validated, normalized, and resized so the model can process it reliably, regardless of the original source. We handle various formats, resolutions, and compression levels.
-            </p>
-          </div>
-
-          <div class="architecture-card">
-            <h4 class="architecture-title">🧠 Computer Vision Model</h4>
-            <p class="architecture-description">
-              A segmentation model scans the image and outputs a per-pixel probability that each region has been synthetically altered. The model is trained on AI inpainting and other manipulation techniques.
-            </p>
-          </div>
-
-          <div class="architecture-card">
-            <h4 class="architecture-title">🎨 Overlay Generation & Rendering</h4>
-            <p class="architecture-description">
-              Probabilities are converted into an overlay mask and rendered on top of the original so reviewers can see suspicious areas instantly and understand <em>where</em> the image was changed.
-            </p>
-          </div>
-
-          <div class="architecture-card">
-            <h4 class="architecture-title">🌐 Web Client Interface</h4>
-            <p class="architecture-description">
-              A lightweight Streamlit interface handles image uploads, runs inference through our PyTorch model, and visualizes the detection overlay for easy review and export.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MODEL PROCESS SECTION -->
-  <section id="process" class="section-padding results-section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Model Process</h2>
-        <p class="section-subtitle">
-          High-level pipeline from raw datasets to a deployed detector.
-        </p>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col-lg-11">
-          <div class="results-card">
-            <img
-              src="images/model_process.png"
-              alt="Model training and deployment pipeline"
-              class="results-img"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MODEL PERFORMANCE SECTION -->
-  <section id="results" class="section-padding results-section">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Model Performance</h2>
-        <p class="section-subtitle">
-          Our ViT-based detector identifies AI-edited regions while staying robust across diverse scenes and edit types.
-        </p>
-      </div>
-
-      <div class="row justify-content-center mb-5">
-        <div class="col-lg-10">
-          <div class="results-card">
-            <h3 class="results-card-title">Pixel-Level Detection Example</h3>
-            <p class="results-card-text">
-              The model highlights edited regions (center) compared to the ground-truth mask (right), enabling reviewers to see <em>where</em> the image was altered, not just whether it was.
-            </p>
-            <img
-              src="images/overlay_example.png"
-              alt="Overlay, predicted mask, ground truth mask"
-              class="results-img"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEMO SECTION -->
-  <section id="demo" class="section-padding">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">See It In Action</h2>
-        <p class="section-subtitle">
-          Watch how a reviewer uploads an image, inspects the overlay, and exports visual evidence.
-        </p>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="demo-container">
-            <div class="ratio ratio-16x9">
-              <!-- Replace with your demo video URL -->
-              <iframe
-                src="https://www.youtube.com/embed/VIDEO_ID_HERE"
-                allowfullscreen
-                style="border-radius: 12px"
-              ></iframe>
+    
+        <div class="row justify-content-center">
+          <div class="col-lg-11">
+            <div class="results-card">
+              <img
+                src="images/model_process.png"
+                alt="Model training and deployment pipeline"
+                class="results-img"
+              />
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- TEAM SECTION -->
-  <section id="team" class="section-padding" style="background: #f7fafc">
+
+
+<!-- MODEL PERFORMANCE SECTION -->
+<section id="results" class="section-padding results-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Model Performance</h2>
+      <p class="section-subtitle">
+        Our ViT-based detector identifies AI-edited regions while staying robust across
+        diverse scenes and edit types.
+      </p>
+    </div>
+
+    <!-- Qualitative example -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-10">
+        <div class="results-card">
+          <h3 class="results-card-title">Pixel-Level Detection Example</h3>
+          <p class="results-card-text">
+            The model highlights edited regions (center) compared to the ground-truth mask (right),
+            enabling reviewers to see <em>where</em> the image was altered, not just whether it was.
+          </p>
+          <img src="images/overlay_example.png" alt="Overlay, predicted mask, ground truth mask"
+               class="results-img">
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<!-- DEMO SECTION -->
+<section id="demo" class="section-padding">
     <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="section-title">Meet The Team</h2>
-        <p class="section-subtitle">
-          FAkeImage Detector is built by a small team of ML engineers and product builders focused on bringing transparency to AI-generated media.
-        </p>
-      </div>
-
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-3">
-          <div class="team-member">
-            <img
-              src="images/hima_headshot.jpeg"
-              class="team-photo"
-              alt="Hima Kethu"
-            />
-            <h4 class="team-name">Hima Kethu</h4>
-          </div>
+        <div class="text-center mb-5">
+            <h2 class="section-title">See It In Action</h2>
+            <p class="section-subtitle">Watch how a reviewer uploads an image, inspects the overlay, and exports visual evidence.</p>
         </div>
-
-        <div class="col-md-3">
-          <div class="team-member">
-            <img
-              src="images/himaja_headshot.jpeg"
-              class="team-photo"
-              alt="Himaja Jangle"
-            />
-            <h4 class="team-name">Himaja Jangle</h4>
-          </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="demo-container">
+                    <div class="ratio ratio-16x9">
+                        <!-- Replace with your demo video URL -->
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
+                                allowfullscreen 
+                                style="border-radius: 12px;">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="col-md-3">
-          <div class="team-member">
-            <img
-              src="images/maya_headshot.jpeg"
-              class="team-photo"
-              alt="Maya Leviten"
-            />
-            <h4 class="team-name">Maya Leviten</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Advisors -->
-      <div class="text-center mt-4">
-        <h3 class="section-title" style="font-size: 1.6rem; margin-bottom: 0.5rem">
-          Advisors
-        </h3>
-        <p style="color: #4a5568; font-size: 1.1rem">
-          Fred Nugen • Puya Vahabi
-        </p>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- Request More Information -->
-  <div class="text-center mt-3 mb-4">
-    <a
-      href="mailto:himaja.jangle@berkeley.edu,himakethu@ischool.berkeley.edu,mleviten@ischool.berkeley.edu?subject=Information%20Request%20-%20FakeImage%20Detector&body=Hello%20Team,%0D%0A%0D%0AI'd%20like%20to%20request%20additional%20technical%20details%20about%20FakeImage%20Detector.%20Please%20share%20the%20relevant%20resources%20(GitHub,%20notebooks,%20etc.).%0D%0A%0D%0AThank%20you,%0D%0A(Your%20Name)"
-      style="
-        display: inline-block;
-        margin-top: 10px;
-        padding: 12px 28px;
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        color: #f9fafb;
-        font-weight: 600;
-        border-radius: 40px;
-        text-decoration: none;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-      "
-    >
-      Request More Information
+<!-- TEAM SECTION -->
+<section id="team" class="section-padding" style="background: #f7fafc;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Meet The Team</h2>
+            <p class="section-subtitle">
+                FakeImage Detector is built by a small team of ML engineers and product builders focused on bringing transparency to AI-generated media.
+            </p>
+        </div>
+        
+        <!-- Team Members -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-3">
+                <div class="team-member">
+                    <img src="images/hima_headshot.jpeg" class="team-photo" alt="Hima Kethu">
+                    <h4 class="team-name">Hima Kethu</h4>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="team-member">
+                    <img src="images/himaja_headshot.jpeg" class="team-photo" alt="Himaja Jangle">
+                    <h4 class="team-name">Himaja Jangle</h4>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="team-member">
+                    <img src="images/maya_headshot.jpeg" class="team-photo" alt="Maya Leviten">
+                    <h4 class="team-name">Maya Leviten</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advisors -->
+        <div class="text-center mt-4">
+            <h3 class="section-title" style="font-size: 1.6rem; margin-bottom: 0.5rem;">
+                Advisors
+            </h3>
+            <p style="color:#4a5568; font-size: 1.1rem;">
+                Fred Nugen • Puya Vahabi
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Request More Information -->
+<div class="text-center mt-3">
+    <a href="mailto:himaja.jangle@berkeley.edu,himakethu@ischool.berkeley.edu,mleviten@ischool.berkeley.edu
+?subject=Information%20Request%20-%20FakeImage%20Detector
+&body=Hello%20Team,%0D%0A%0D%0AI'd%20like%20to%20request%20additional%20technical%20details%20about%20FakeImage%20Detector.%20Please%20share%20the%20relevant%20resources%20(GitHub,%20notebooks,%20etc.).%0D%0A%0D%0AThank%20you,%0D%0A(Your%20Name)"
+       style="
+            display:inline-block;
+            margin-top:10px;
+            padding:12px 28px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color:#f9fafb;
+            font-weight:600;
+            border-radius:40px;
+            text-decoration:none;
+            box-shadow:0 8px 20px rgba(0,0,0,0.25);
+       ">
+        Request More Information
     </a>
-  </div>
+</div>
+    
 
-  <!-- FOOTER -->
-  <footer>
+<!-- FOOTER -->
+<footer>
     <div class="container">
-      <p class="mb-2" style="font-size: 1.1rem; font-weight: 600">
-        FAkeImage Detector
-      </p>
-      <p class="mb-0" style="opacity: 0.8">
-        Bringing transparency to AI-manipulated media
-      </p>
+        <p class="mb-2" style="font-size: 1.1rem; font-weight: 600;">FAkeImage Detector</p>
+        <p class="mb-0" style="opacity: 0.8;">Bringing transparency to AI-manipulated media</p>
     </div>
-  </footer>
+</footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
